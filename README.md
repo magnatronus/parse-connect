@@ -10,6 +10,32 @@ With it you should be able to create, edit, update and delete Objects as well as
 This is currently **VERY MUCH** Work in Progress.
 
 
+# Example Useage
+As I **eat my own dog food** (never did like that phrase, but it kinda fits) I will put some code snippets here to show various scenarios - I may move this to the Wiki section later.
+
+## GeoPoint Queries on Objects
+I am storing info on Places with a GeoPoint column (called *Location*) and needed to query for nearby places, so this is how I did it:
+
+```
+// create our Where query as a map
+Map where = {
+    "Location": {
+    "\$nearSphere": {
+        "__type": "GeoPoint", "latitude": currentLocation.latitude, "longitude": currentLocation.longitude
+    }
+    }
+};
+
+// now query the server
+//api.debug = true;
+ParseConnect.ParseResult result = await api.object("Places").query(
+    where: jsonEncode(where)
+);
+  
+```
+
+
+
 ## Getting Started
 
 For package install [see here](https://pub.dartlang.org/packages/parse-connect).
