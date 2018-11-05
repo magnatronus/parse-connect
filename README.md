@@ -10,7 +10,7 @@ With it you should be able to create, edit, update and delete Objects as well as
 This is currently **VERY MUCH** Work in Progress.
 
 
-# Example Useage
+## Example Usage
 As I **eat my own dog food** (never did like that phrase, but it kinda fits) I will put some code snippets here to show various scenarios - I may move this to the Wiki section later.
 
 ## GeoPoint Queries on Objects
