@@ -11,7 +11,7 @@ This is currently **VERY MUCH** Work in Progress.
 
 
 ## Example Usage
-As I **eat my own dog food** (never did like that phrase, but it kinda fits) I will put some code snippets on the [project Wiki here] (https://github.com/magnatronus/parse-connect/wiki).
+As I **eat my own dog food** (never did like that phrase, but it kinda fits) I will put some code snippets on the [project Wiki here](https://github.com/magnatronus/parse-connect/wiki).
 
 
 
