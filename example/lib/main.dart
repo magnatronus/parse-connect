@@ -42,10 +42,10 @@ class _DemoScreenState extends State<DemoScreen> {
           RaisedButton(
             onPressed: () async {
               // Test Object Interface
-              _testObjectInterface("MyTestObject");
+              //_testObjectInterface("MyTestObject");
 
               // Test User interface
-              _testUserInterface("myuser", "123qw!", "a@bc.w");
+              _testUserInterface("myuser", "123qw!", "a@bad.not.email");
             },
             child: Text("Run Parse Test"),
           ),
@@ -68,6 +68,15 @@ class _DemoScreenState extends State<DemoScreen> {
       print("${result.errorCode}:${result.errorMessage}");
     }
 
+    // Verify the user with the returned session token
+    sessionToken = result.data['sessionToken'];
+    result = await api.user().validate(sessionToken);
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    } else {
+      print(result.data);
+    }
+    /*
     // Query to see if an account exists already
     result = await api.user().query(where: '{"email": "$email"}');
     if (!result.ok) {
@@ -76,11 +85,11 @@ class _DemoScreenState extends State<DemoScreen> {
     print(result.data);
 
     // Send an Email Verification Request
-    //result = await api.user().verifyEmail(email);
-    //if(!result.ok){
-    // throw("${result.errorCode}:${result.errorMessage}");
-    //}
-    //print(result.data);
+    result = await api.user().verifyEmail(email);
+    if(!result.ok){
+     throw("${result.errorCode}:${result.errorMessage}");
+    }
+    print(result.data);
 
     // LOGIN user
     result = await api.user().login(username, password);
@@ -101,11 +110,11 @@ class _DemoScreenState extends State<DemoScreen> {
     print(result.data);
 
     // Test Password Reset Request
-    //result = await api.user().passwordReset(email);
-    //if(!result.ok){
-    // throw("${result.errorCode}:${result.errorMessage}");
-    //}
-    //print(result.data);
+    result = await api.user().passwordReset(email);
+    if(!result.ok){
+     throw("${result.errorCode}:${result.errorMessage}");
+    }
+    print(result.data);
 
     // Test UPDATE user
     result = await api
@@ -116,12 +125,13 @@ class _DemoScreenState extends State<DemoScreen> {
     }
     print(result.data);
 
-    // DELETE the test user object
-    //result = await api.user(userID).delete(sessionToken);
-    //if(!result.ok){
-    // throw("${result.errorCode}:${result.errorMessage}");
-    //}
-    //print(result.data);
+    /// DELETE the test user object
+    result = await api.user(userID).delete(sessionToken);
+    if(!result.ok){
+     throw("${result.errorCode}:${result.errorMessage}");
+    }
+    print(result.data);
+    */
   }
 
   /// This is an example of the calls that can be made again a custom Parse object

@@ -51,6 +51,16 @@ class User extends BaseObject {
     return ParseResult((result.statusCode == 200), jsonDecode(result.body));
   }
 
+  /// Validate the user by a session Token
+  /// [sessionToken] - a session token returned in a user.create or user.login
+  validate(String sessionToken) async {
+    Map<String, String> additionalHeader = {
+      "X-Parse-Session-Token": sessionToken
+    };
+    var result = await parseQuery("/Users/me", additionalHeader);
+    return ParseResult((result.statusCode == 200), jsonDecode(result.body));
+  }
+
   /// This will initiate a password reset for the selected email address
   /// [email] - The email address associated with the account for password reset
   /// ref https://docs.parseplatform.org/rest/guide/#requesting-a-password-reset

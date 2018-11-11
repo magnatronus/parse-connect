@@ -1,3 +1,7 @@
+## [0.0.4] - 11 Nov 2018
+
+* Add User verification using session token
+
 ## [0.0.3] - 08 Nov 2018.
 
 * Updated dependency on http  for flutter sdk release 0.10.2.
