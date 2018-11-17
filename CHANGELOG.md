@@ -1,3 +1,7 @@
+## [0.0.5] - 17 Nov 2018
+
+* Add logout functionality
+
 ## [0.0.4] - 11 Nov 2018
 
 * Add User verification using session token

@@ -45,7 +45,7 @@ class _DemoScreenState extends State<DemoScreen> {
               //_testObjectInterface("MyTestObject");
 
               // Test User interface
-              _testUserInterface("myuser", "123qw!", "a@bad.not.email");
+              _testUserInterface("fred", "password", "a@bad.not.email");
             },
             child: Text("Run Parse Test"),
           ),
@@ -76,6 +76,24 @@ class _DemoScreenState extends State<DemoScreen> {
     } else {
       print(result.data);
     }
+
+    //  Log user out
+    result = await api.user().logout(sessionToken);
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    } else {
+      print(result.data);
+    }
+
+    // RE-Verify the user with the returned session token
+    sessionToken = result.data['sessionToken'];
+    result = await api.user().validate(sessionToken);
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    } else {
+      print(result.data);
+    }
+
     /*
     // Query to see if an account exists already
     result = await api.user().query(where: '{"email": "$email"}');

@@ -51,8 +51,20 @@ class User extends BaseObject {
     return ParseResult((result.statusCode == 200), jsonDecode(result.body));
   }
 
+  /// Log the current user associated with [sessionToken] out of the current application
+  /// [sessionToken] - the current sessionToken associated with the logged in user
+  /// ref https://docs.parseplatform.org/rest/guide/#deleting-sessions
+  logout(String sessionToken) async {
+    Map<String, String> additionalHeader = {
+      "X-Parse-Session-Token": sessionToken
+    };
+    var result = await parsePost("/logout", additionalHeader);
+    return ParseResult((result.statusCode == 200), jsonDecode(result.body));
+  }
+
   /// Validate the user by a session Token
   /// [sessionToken] - a session token returned in a user.create or user.login
+  /// ref https://docs.parseplatform.org/rest/guide/#validating-session-tokens--retrieving-current-user
   validate(String sessionToken) async {
     Map<String, String> additionalHeader = {
       "X-Parse-Session-Token": sessionToken

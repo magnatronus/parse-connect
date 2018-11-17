@@ -18,6 +18,18 @@ class BaseObject {
     return result;
   }
 
+  /// POST: Similar to a ParseSave but there is NO body that needs to be associated with the POST
+  /// [params] is optional and will add new header values to the Parse call
+  parsePost(String query, [Map params]) async {
+    String url = "$endpoint$query";
+    if (params != null) {
+      headers.addAll(params);
+    }
+    _debugPrint(" Pass Save URL call: $url");
+    _debugPrint(headers);
+    return http.post(Uri.encodeFull(url), headers: headers);
+  }
+
   /// CREATE: Run a query to create a new Parse object
   /// [params] is optional and will add new header values to the Parse call
   parseSave(String query, String data, [Map params]) async {
