@@ -1,3 +1,7 @@
+## [0.0.6] - 20 Nov 2018
+
+* Corrected issues with header values in baseObject
+
 ## [0.0.5] - 17 Nov 2018
 
 * Add logout functionality

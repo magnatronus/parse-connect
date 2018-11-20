@@ -1,6 +1,6 @@
 name: parse_connect
 description: A Flutter package to allow connection to a Parse server on the Back4App.com service.
-version: 0.0.5
+version: 0.0.6
 author: Steve Rogers <srogers.uk@gmail.com>
 homepage: https://github.com/magnatronus/parse-connect
 

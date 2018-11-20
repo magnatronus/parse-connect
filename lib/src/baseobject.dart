@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 /// this is not used in its own right but serves as a base object for other Parse classes
 class BaseObject {
   final String endpoint;
-  final Map headers;
+  final Map <String, String>headers;
   final bool debug;
 
   BaseObject(this.endpoint, this.headers, this.debug);
@@ -22,55 +22,63 @@ class BaseObject {
   /// [params] is optional and will add new header values to the Parse call
   parsePost(String query, [Map params]) async {
     String url = "$endpoint$query";
+    Map <String, String> _headers = Map.fromEntries(headers.entries);
     if (params != null) {
-      headers.addAll(params);
+      _headers.addAll(params);
     }
     _debugPrint(" Pass Save URL call: $url");
     _debugPrint(headers);
-    return http.post(Uri.encodeFull(url), headers: headers);
+    return http.post(Uri.encodeFull(url), headers: _headers);
   }
 
   /// CREATE: Run a query to create a new Parse object
   /// [params] is optional and will add new header values to the Parse call
   parseSave(String query, String data, [Map params]) async {
     String url = "$endpoint$query";
+    Map <String, String> _headers = Map.fromEntries(headers.entries);
     if (params != null) {
-      headers.addAll(params);
+      _headers.addAll(params);
     }
     _debugPrint(" Pass Save URL call: $url");
     _debugPrint(" Body Content: $data");
     _debugPrint(headers);
-    return http.post(Uri.encodeFull(url), headers: headers, body: data);
+    return http.post(Uri.encodeFull(url), headers: _headers, body: data);
   }
 
   /// READ: Run a Parse Query to find and return data
   parseQuery(String query, [Map params]) async {
     String url = "$endpoint$query";
+    Map <String, String> _headers = Map.fromEntries(headers.entries);
     if (params != null) {
-      headers.addAll(params);
+      _headers.addAll(params);
     }
     _debugPrint(" Pass Query URL call: $url");
-    return http.get(Uri.encodeFull(url), headers: headers);
+    _debugPrint(headers);
+    return http.get(Uri.encodeFull(url), headers: _headers);
   }
 
   // UPDATE: Run a query to update an existing Parse object
   parseUpdate(String query, String id, String data, [Map params]) {
     String url = "$endpoint$query/$id";
+    Map <String, String> _headers = Map.fromEntries(headers.entries);
     if (params != null) {
-      headers.addAll(params);
+      _headers.addAll(params);
     }
     _debugPrint(" Pass Save URL call: $url");
-    return http.put(Uri.encodeFull(url), headers: headers, body: data);
+    _debugPrint(headers);
+    return http.put(Uri.encodeFull(url), headers: _headers, body: data);
   }
 
   /// DELETE: Run a query to delete an existing Parse object
   parseDelete(String query, String id, [Map params]) {
     String url = "$endpoint$query/$id";
+    Map <String, String> _headers = Map.fromEntries(headers.entries);   
     if (params != null) {
-      headers.addAll(params);
+      _headers.addAll(params);
     }
     _debugPrint(" Pass Save URL call: $url");
-    return http.delete(Uri.encodeFull(url), headers: headers);
+    _debugPrint(headers);    
+    return http.delete(Uri.encodeFull(url), headers: _headers);
   }
 
   /// Used for printing debug messages when switched on
