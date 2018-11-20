@@ -1,3 +1,7 @@
+## [0.0.7] - 20 Nov 2018
+
+* Update User login & logout to track user sessionToken plus some documentation updates
+
 ## [0.0.6] - 20 Nov 2018
 
 * Corrected issues with header values in baseObject

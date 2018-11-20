@@ -3,6 +3,12 @@ import 'baseobject.dart';
 import "parseresult.dart";
 
 /// This class represents a Parse Object (https://docs.parseplatform.org/rest/guide/#objects)
+/// and has the following methods:
+/// [read]
+/// [query]
+/// [create]
+/// [update]
+/// [delete]
 class Object extends BaseObject {
   final String className;
 

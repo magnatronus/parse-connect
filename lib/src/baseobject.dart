@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 /// this is not used in its own right but serves as a base object for other Parse classes
 class BaseObject {
   final String endpoint;
-  final Map <String, String>headers;
+  final Map<String, String> headers;
   final bool debug;
 
   BaseObject(this.endpoint, this.headers, this.debug);
@@ -18,11 +18,22 @@ class BaseObject {
     return result;
   }
 
+  /// Specific Login function so that we automatically track the user sessionToken in other calls
+  ///
+  parseLogin(String params) async {
+    String url = "$endpoint/login/$params";
+    Map<String, String> _headers = Map.fromEntries(headers.entries);
+    _headers["X-Parse-Revocable-Session"] = "1";
+    _debugPrint(" Pass Query URL call: $url");
+    _debugPrint(headers);
+    return http.get(Uri.encodeFull(url), headers: _headers);
+  }
+
   /// POST: Similar to a ParseSave but there is NO body that needs to be associated with the POST
   /// [params] is optional and will add new header values to the Parse call
   parsePost(String query, [Map params]) async {
     String url = "$endpoint$query";
-    Map <String, String> _headers = Map.fromEntries(headers.entries);
+    Map<String, String> _headers = Map.fromEntries(headers.entries);
     if (params != null) {
       _headers.addAll(params);
     }
@@ -35,7 +46,7 @@ class BaseObject {
   /// [params] is optional and will add new header values to the Parse call
   parseSave(String query, String data, [Map params]) async {
     String url = "$endpoint$query";
-    Map <String, String> _headers = Map.fromEntries(headers.entries);
+    Map<String, String> _headers = Map.fromEntries(headers.entries);
     if (params != null) {
       _headers.addAll(params);
     }
@@ -48,7 +59,7 @@ class BaseObject {
   /// READ: Run a Parse Query to find and return data
   parseQuery(String query, [Map params]) async {
     String url = "$endpoint$query";
-    Map <String, String> _headers = Map.fromEntries(headers.entries);
+    Map<String, String> _headers = Map.fromEntries(headers.entries);
     if (params != null) {
       _headers.addAll(params);
     }
@@ -60,7 +71,7 @@ class BaseObject {
   // UPDATE: Run a query to update an existing Parse object
   parseUpdate(String query, String id, String data, [Map params]) {
     String url = "$endpoint$query/$id";
-    Map <String, String> _headers = Map.fromEntries(headers.entries);
+    Map<String, String> _headers = Map.fromEntries(headers.entries);
     if (params != null) {
       _headers.addAll(params);
     }
@@ -72,12 +83,12 @@ class BaseObject {
   /// DELETE: Run a query to delete an existing Parse object
   parseDelete(String query, String id, [Map params]) {
     String url = "$endpoint$query/$id";
-    Map <String, String> _headers = Map.fromEntries(headers.entries);   
+    Map<String, String> _headers = Map.fromEntries(headers.entries);
     if (params != null) {
       _headers.addAll(params);
     }
     _debugPrint(" Pass Save URL call: $url");
-    _debugPrint(headers);    
+    _debugPrint(headers);
     return http.delete(Uri.encodeFull(url), headers: _headers);
   }
 

@@ -3,6 +3,17 @@ import 'baseobject.dart';
 import "parseresult.dart";
 
 /// This class represents a Parse User (https://docs.parseplatform.org/rest/guide/#users)
+/// and has the following methods:
+/// [create]
+/// [read]
+/// [query]
+/// [login]
+/// [logout]
+/// [validate]
+/// [passwordReset]
+/// [verifyEmail]
+/// [update]
+/// [delete]
 class User extends BaseObject {
   String userID;
 
@@ -45,20 +56,21 @@ class User extends BaseObject {
   /// [pwd] - the associated account password
   /// ref https://docs.parseplatform.org/rest/guide/#logging-in
   login(String un, String pwd) async {
-    Map<String, String> additionalHeader = {"X-Parse-Revocable-Session": "1"};
     String params = buildParamsFromMap({"username": un, "password": pwd});
-    var result = await parseQuery("/login$params", additionalHeader);
+    var result = await parseLogin(params);
+    if (result.statusCode == 200) {
+      super.headers["X-Parse-Session-Token"] =
+          jsonDecode(result.body)["sessionToken"];
+      ;
+    }
     return ParseResult((result.statusCode == 200), jsonDecode(result.body));
   }
 
   /// Log the current user associated with [sessionToken] out of the current application
-  /// [sessionToken] - the current sessionToken associated with the logged in user
   /// ref https://docs.parseplatform.org/rest/guide/#deleting-sessions
-  logout(String sessionToken) async {
-    Map<String, String> additionalHeader = {
-      "X-Parse-Session-Token": sessionToken
-    };
-    var result = await parsePost("/logout", additionalHeader);
+  logout() async {
+    var result = await parsePost("/logout");
+    super.headers.remove("X-Parse-Session-Token");
     return ParseResult((result.statusCode == 200), jsonDecode(result.body));
   }
 
@@ -93,26 +105,17 @@ class User extends BaseObject {
 
   /// Update a users details
   /// [data] is a map of the user data to update
-  /// [sessionToken] should belong to the user to update and be valid
   /// ref https://docs.parseplatform.org/rest/guide/#updating-users
-  update(Map data, String sessionToken) async {
-    Map<String, String> additionalHeader = {
-      "X-Parse-Session-Token": sessionToken
-    };
-    var result =
-        await parseUpdate("/Users", userID, jsonEncode(data), additionalHeader);
+  update(Map data) async {
+    var result = await parseUpdate("/Users", userID, jsonEncode(data));
     return ParseResult((result.statusCode == 200), jsonDecode(result.body));
   }
 
   /// Delete an EXISTING User
   /// [id] - the id of the user to delete
-  /// [sessionToken] - current and valid user Session Token
   /// ref https://docs.parseplatform.org/rest/guide/#deleting-users
-  delete(String sessionToken) async {
-    Map<String, String> additionalHeader = {
-      "X-Parse-Session-Token": sessionToken
-    };
-    var result = await parseDelete("/Users", userID, additionalHeader);
+  delete() async {
+    var result = await parseDelete("/Users", userID);
     return ParseResult((result.statusCode == 200), jsonDecode(result.body));
   }
 }

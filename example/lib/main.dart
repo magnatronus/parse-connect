@@ -24,7 +24,6 @@ class _DemoScreenState extends State<DemoScreen> {
       "https://parseapi.back4app.com",
       "{put_your_app_id_here}",
       "{put_your-REST-api_key_here}");
-
   @override
   initState() {
     super.initState();
@@ -45,7 +44,7 @@ class _DemoScreenState extends State<DemoScreen> {
               //_testObjectInterface("MyTestObject");
 
               // Test User interface
-              _testUserInterface("fred", "password", "a@bad.not.email");
+              _testUserInterface();
             },
             child: Text("Run Parse Test"),
           ),
@@ -56,19 +55,22 @@ class _DemoScreenState extends State<DemoScreen> {
 
   // This is an example of the User interface
   // This will run Create, Query, Login, Read, Update,
-  _testUserInterface(String username, String password, String email) async {
+  _testUserInterface() async {
     ParseConnect.ParseResult result;
-    String userID, sessionToken;
+    String userId, sessionToken;
 
-    // CREATE a user object
+/*
+    // CREATE a user object (user "FRED")
+    print("CREATE USER: fred --------------------------------");
     result = await api
         .user()
-        .create({"username": username, "password": password, "email": email});
+        .create({"username": "fred", "password": "password"});
     if (!result.ok) {
       print("${result.errorCode}:${result.errorMessage}");
     }
 
     // Verify the user with the returned session token
+    print("VERIFY USER: fred --------------------------------");
     sessionToken = result.data['sessionToken'];
     result = await api.user().validate(sessionToken);
     if (!result.ok) {
@@ -78,14 +80,27 @@ class _DemoScreenState extends State<DemoScreen> {
     }
 
     //  Log user out
-    result = await api.user().logout(sessionToken);
+    print("LOGOUT USER: fred --------------------------------");
+    result = await api.user().logout();
     if (!result.ok) {
       print("${result.errorCode}:${result.errorMessage}");
     } else {
       print(result.data);
     }
 
-    // RE-Verify the user with the returned session token
+
+
+    // CREATE a user object (user "WILMA")
+    print("CREATE USER: wilma --------------------------------");
+    result = await api
+        .user()
+        .create({"username": "wilma", "password": "password"});
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    }
+
+    // Verify the user with the returned session token
+    print("VERIFY USER: wilma --------------------------------");
     sessionToken = result.data['sessionToken'];
     result = await api.user().validate(sessionToken);
     if (!result.ok) {
@@ -93,6 +108,133 @@ class _DemoScreenState extends State<DemoScreen> {
     } else {
       print(result.data);
     }
+
+    //  Log user out
+    print("LOGOUT USER: wilma --------------------------------");
+    result = await api.user().logout();
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    } else {
+      print(result.data);
+    }
+
+    // Log in Fred
+    print("LOGIN USER: fred --------------------------------");
+    result = await api.user().login("fred", "password");
+    if (!result.ok) {
+      throw ("${result.errorCode}:${result.errorMessage}");
+    }
+    userId = result.data['objectId'];
+
+    // Add an object
+    print("ADD OBJECT FOR: fred --------------------------------");    
+    result = await api.object("BedRock").create({
+      "Name": "This is Fred's Object",
+      "ACL": {
+		    userId: {
+			    "read": true,
+			    "write": true
+		    }
+	    }
+    });
+    if (!result.ok) {
+      throw ("${result.errorCode}:${result.errorMessage}");
+    }
+    print(result.data);
+
+    //  Log fred out
+    print("LOGOUT USER: fred --------------------------------");
+    result = await api.user().logout();
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    } else {
+      print(result.data);
+    }
+
+    // Log in Wilma
+    print("LOGIN USER: wilma --------------------------------");
+    result = await api.user().login("wilma", "password");
+    if (!result.ok) {
+      throw ("${result.errorCode}:${result.errorMessage}");
+    }
+    userId = result.data['objectId'];
+    // Add an object
+    print("ADD OBJECT FOR: wilma --------------------------------");    
+    result = await api.object("BedRock").create({
+      "Name": "This is Wilma's Object",
+      "ACL": {
+		    userId: {
+			    "read": true,
+			    "write": true
+		    }
+	    }  
+    });
+    if (!result.ok) {
+      throw ("${result.errorCode}:${result.errorMessage}");
+    }
+    print(result.data);
+
+    //  Log wilma out
+    print("LOGOUT USER: wilma --------------------------------");
+    result = await api.user().logout();
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    } else {
+      print(result.data);
+    }
+
+
+    // Log in Fred
+    print("LOGIN USER: fred --------------------------------");
+    result = await api.user().login("fred", "password");
+    if (!result.ok) {
+      throw ("${result.errorCode}:${result.errorMessage}");
+    }
+    userId = result.data['objectId'];
+
+    // Query for ALL fred's object
+    print("QUERY objects: fred --------------------------------");    
+    result = await api.object("BedRock").query();
+    if (!result.ok) {
+      throw ("${result.errorCode}:${result.errorMessage}");
+    }
+    print(result.data);
+
+    //  Log fred out
+    print("LOGOUT USER: fred --------------------------------");
+    result = await api.user().logout();
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    } else {
+      print(result.data);
+    }
+
+    // Log in Wilma
+    print("LOGIN USER: fred --------------------------------");
+    result = await api.user().login("wilma", "password");
+    if (!result.ok) {
+      throw ("${result.errorCode}:${result.errorMessage}");
+    }
+    userId = result.data['objectId'];
+
+    // Query for ALL Wilma's object
+    print("QUERY objects: wilma --------------------------------");    
+    result = await api.object("BedRock").query();
+    if (!result.ok) {
+      throw ("${result.errorCode}:${result.errorMessage}");
+    }
+    print(result.data);
+
+    //  Log wilma out
+    print("LOGOUT USER: wilma --------------------------------");
+    result = await api.user().logout();
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    } else {
+      print(result.data);
+    }
+
+  */
 
     /*
     // Query to see if an account exists already
@@ -108,43 +250,49 @@ class _DemoScreenState extends State<DemoScreen> {
      throw("${result.errorCode}:${result.errorMessage}");
     }
     print(result.data);
+   */
+
+    // CREATE a user object
+    result =
+        await api.user().create({"username": "barney", "password": "password"});
+    if (!result.ok) {
+      print("${result.errorCode}:${result.errorMessage}");
+    }
 
     // LOGIN user
-    result = await api.user().login(username, password);
+    result = await api.user().login("barney", "password");
     if (!result.ok) {
       throw ("${result.errorCode}:${result.errorMessage}");
     }
-
-    // note the session token & userid
-    sessionToken = result.data['sessionToken'];
-    userID = result.data['objectId'];
+    userId = result.data['objectId'];
 
     // get user details
     print("Test READ()");
-    result = await api.user(userID).read();
+    result = await api.user(userId).read();
     if (!result.ok) {
       throw ("${result.errorCode}:${result.errorMessage}");
-    }
-    print(result.data);
-
-    // Test Password Reset Request
-    result = await api.user().passwordReset(email);
-    if(!result.ok){
-     throw("${result.errorCode}:${result.errorMessage}");
     }
     print(result.data);
 
     // Test UPDATE user
     result = await api
-        .user(userID)
-        .update({"jobtitle": " Developer Advocate"}, sessionToken);
+        .user(userId)
+        .update({"jobtitle": "Fred's sidekick and father to Pebbles"});
     if (!result.ok) {
       throw ("${result.errorCode}:${result.errorMessage}");
     }
     print(result.data);
 
     /// DELETE the test user object
-    result = await api.user(userID).delete(sessionToken);
+    result = await api.user(userId).delete();
+    if (!result.ok) {
+      throw ("${result.errorCode}:${result.errorMessage}");
+    }
+    print(result.data);
+
+    /*
+    // Test Password Reset Request
+    result = await api.user().passwordReset(email);
     if(!result.ok){
      throw("${result.errorCode}:${result.errorMessage}");
     }

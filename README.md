@@ -8,6 +8,9 @@ Parse_Connect is a package that provides Parse client functionality for Flutter.
 With it you should be able to create, edit, update and delete Objects as well as signing up, updating, deleting and logging on Users.
 
 
+## release 0.0.7
+Modified *login* & *logout* to automatically track the user sessionToken.
+
 ## release 0.0.6
 This update fixes an issue that manifested itself when logging different users in and out on the same device. As the *headers* Map was final each call added to the header params which meant when logging in, then out, then in as a different user the old sessionToken remained and caused an *Invalid SessionToken* error.
 
