@@ -37,7 +37,7 @@ class BaseObject {
       _headers.addAll(params);
     }
     _debugPrint(" Pass Save URL call: $url");
-    _debugPrint(headers);
+    _debugPrint(_headers);
     return http.post(Uri.encodeFull(url), headers: _headers);
   }
 
@@ -51,7 +51,7 @@ class BaseObject {
     }
     _debugPrint(" Pass Save URL call: $url");
     _debugPrint(" Body Content: $data");
-    _debugPrint(headers);
+    _debugPrint(_headers);
     return http.post(Uri.encodeFull(url), headers: _headers, body: data);
   }
 
@@ -63,7 +63,7 @@ class BaseObject {
       _headers.addAll(params);
     }
     _debugPrint(" Pass Query URL call: $url");
-    _debugPrint(headers);
+    _debugPrint(_headers);
     return http.get(Uri.encodeFull(url), headers: _headers);
   }
 
@@ -75,7 +75,7 @@ class BaseObject {
       _headers.addAll(params);
     }
     _debugPrint(" Pass Save URL call: $url");
-    _debugPrint(headers);
+    _debugPrint(_headers);
     return http.put(Uri.encodeFull(url), headers: _headers, body: data);
   }
 
@@ -87,7 +87,7 @@ class BaseObject {
       _headers.addAll(params);
     }
     _debugPrint(" Pass Save URL call: $url");
-    _debugPrint(headers);
+    _debugPrint(_headers);
     return http.delete(Uri.encodeFull(url), headers: _headers);
   }
 
