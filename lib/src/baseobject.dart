@@ -19,7 +19,6 @@ class BaseObject {
   }
 
   /// Specific Login function so that we automatically track the user sessionToken in other calls
-  ///
   parseLogin(String params) async {
     String url = "$endpoint/login/$params";
     Map<String, String> _headers = Map.fromEntries(headers.entries);

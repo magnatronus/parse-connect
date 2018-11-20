@@ -2,7 +2,7 @@ import "dart:convert";
 import 'baseobject.dart';
 import "parseresult.dart";
 
-/// This class represents a Parse User (https://docs.parseplatform.org/rest/guide/#users)
+/// This class represents a Parse User
 /// and has the following methods:
 /// [create]
 /// [read]
@@ -14,6 +14,8 @@ import "parseresult.dart";
 /// [verifyEmail]
 /// [update]
 /// [delete]
+///
+/// ref https://docs.parseplatform.org/rest/guide/#users
 class User extends BaseObject {
   String userID;
 
@@ -61,7 +63,6 @@ class User extends BaseObject {
     if (result.statusCode == 200) {
       super.headers["X-Parse-Session-Token"] =
           jsonDecode(result.body)["sessionToken"];
-      ;
     }
     return ParseResult((result.statusCode == 200), jsonDecode(result.body));
   }
@@ -75,6 +76,7 @@ class User extends BaseObject {
   }
 
   /// Validate the user by a session Token
+  /// If the session is valid it will set the API session to the passed in value
   /// [sessionToken] - a session token returned in a user.create or user.login
   /// ref https://docs.parseplatform.org/rest/guide/#validating-session-tokens--retrieving-current-user
   validate(String sessionToken) async {
@@ -82,6 +84,9 @@ class User extends BaseObject {
       "X-Parse-Session-Token": sessionToken
     };
     var result = await parseQuery("/Users/me", additionalHeader);
+    if (result.statusCode == 200) {
+      super.headers["X-Parse-Session-Token"] = sessionToken;
+    }
     return ParseResult((result.statusCode == 200), jsonDecode(result.body));
   }
 

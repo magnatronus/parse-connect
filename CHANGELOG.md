@@ -1,3 +1,7 @@
+## [0.0.8] - 20 Nov 2018
+
+* update user validate() to set API session token if valid
+
 ## [0.0.7] - 20 Nov 2018
 
 * Update User login & logout to track user sessionToken plus some documentation updates
