@@ -16,7 +16,8 @@ This is currently **Work in Progress** and the API's are subject to updates and 
 ## Updates
 
 ### 0.0.9
-Added the ability t execute cloud functions. This is simple done by  *api.function({functionName}).execute({params to pass function})*.
+Added the ability to execute cloud functions. This is simply done using  *api.function({functionName}).execute({params to pass function})*.
+There is shown in the example app.
 
 ### 0.0.8
 Updated the user validate() method to automatically set the sessionToken if it is valid
