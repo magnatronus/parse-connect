@@ -4,13 +4,20 @@ Parse_Connect is a package that provides Parse client functionality for Flutter.
 
 - *Object*
 - *User*
+- *Function*
 
 With it you should be able to create, edit, update and delete Objects as well as signing up, updating, deleting and logging on Users.
+And with the 0.0.9 update also call a cloud function.
+
 
 This is currently **Work in Progress** and the API's are subject to updates and modifications as they are developed and refined.
 
 
 ## Updates
+
+### 0.0.9
+Added the ability to execute cloud functions. This is simply done using  *api.function({functionName}).execute({params to pass function})*.
+There is shown in the example app.
 
 ### 0.0.8
 Updated the user validate() method to automatically set the sessionToken if it is valid

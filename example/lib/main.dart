@@ -12,7 +12,7 @@ class ParseDemo extends StatelessWidget {
 
 /// Simple Demo of using Parse_Connect to connect  a Flutter app to a Parse Server
 /// This demo and the Package where developed and tested again  a server on the
-/// https://www.back4app.com/  service and has not be tested again other Parser services
+/// https://www.back4app.com/  service and has not be tested again other Parse services
 ///
 class DemoScreen extends StatefulWidget {
   @override
@@ -44,13 +44,26 @@ class _DemoScreenState extends State<DemoScreen> {
               //_testObjectInterface("MyTestObject");
 
               // Test User interface
-              _testUserInterface();
+              //_testUserInterface();
+
+              // Test the cloud function interface
+              _testCloudFunctionInterface();
             },
             child: Text("Run Parse Test"),
           ),
         ],
       ),
     );
+  }
+
+  // simple example of executing a cloud function
+  _testCloudFunctionInterface() async {
+    ParseConnect.ParseResult result;
+
+    Map params = {"firstName": "Fred", "lastName": "Flintstone"};
+    result = await api.function("test").execute(params);
+    print(result.ok);
+    print(result.data);
   }
 
   // This is an example of the User interface
