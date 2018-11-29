@@ -1,3 +1,7 @@
+## [0.0.9] - 29 Nov 2018
+
+* added the ability to run a cloud function
+
 ## [0.0.8] - 20 Nov 2018
 
 * update user validate() to set API session token if valid

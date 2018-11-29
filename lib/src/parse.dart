@@ -1,6 +1,7 @@
 /// The main parse API
 import 'object.dart';
 import 'user.dart';
+import 'funcs.dart';
 
 /// This is the main Parse API class
 /// It requires 3 values passed in the constructor
@@ -36,5 +37,11 @@ class ParseAPI {
   /// [name] is the object classname to use
   object(name) {
     return Object(name, endpoint, _headers, _debug);
+  }
+
+  /// Interface to allow the running of cloud function
+  /// [name] is the name of the cloud function to run
+  function(name) {
+    return ParseFunction(name, endpoint, _headers, _debug);
   }
 }
